@@ -1,8 +1,4 @@
 ---
 # handlers file for kibana-role
   - name: restart Kibana
-    become: true
-    systemd:
-      name: kibana
-      state: restarted
-      enabled: true
+    shell: "sh /etc/init.d/kibana restart"
