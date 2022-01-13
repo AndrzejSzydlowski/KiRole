@@ -1,0 +1,17 @@
+    - name: Download Kibana rpm
+      get_url:
+        url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ elk_stack_version }}-x86_64.rpm"
+        dest: "/tmp/kibana-{{ elk_stack_version }}-x86_64.rpm"
+      register: download_kibana
+      until: download_kibana is succeeded
+    - name: Install kibana
+      become: true
+      dnf:
+        disable_gpg_check: True
+        name: "/tmp/kibana-{{ elk_stack_version }}-x86_64.rpm"
+        state: present
+    - name: Install Initscripts
+      become: true
+      dnf:
+        name: initscripts
+        state: present

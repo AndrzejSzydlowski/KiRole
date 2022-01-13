@@ -1,0 +1,16 @@
+    - name: Download Kibana deb
+      get_url:
+        url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ elk_stack_version }}-amd64.deb"
+        dest: "/tmp/kibana-{{ elk_stack_version }}-amd64.deb"
+      register: download_kibana
+      until: download_kibana is succeeded
+    - name: Install kibana
+      become: true
+      apt:
+        deb: "/tmp/kibana-{{ elk_stack_version }}-amd64.deb"
+        state: present
+    - name: Install sysvinit-utils
+      become: true
+      apt:
+        name: sysvinit-utils
+        state: present

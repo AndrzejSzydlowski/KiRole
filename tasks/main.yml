@@ -1,21 +1,6 @@
 ---
 # tasks file for kibana-role
-    - name: Download Kibana rpm
-      get_url:
-        url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ elk_stack_version }}-x86_64.rpm"
-        dest: "/tmp/kibana-{{ elk_stack_version }}-x86_64.rpm"
-      register: download_kibana
-      until: download_kibana is succeeded
-    - name: Install kibana
-      become: true
-      yum:
-        name: "/tmp/kibana-{{ elk_stack_version }}-x86_64.rpm"
-        state: present
-    - name: Install Initscripts
-      become: true
-      yum:
-        name: initscripts
-        state: present
+    - include_tasks: "kibana_{{ ansible_facts.pkg_mgr }}_tasks.yml"
     - name: Configure Kibana
       become: true
       template:
