@@ -1,0 +1,13 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: Check that the filebeat.log exists
+    assert:
+      that:
+        stat:
+          path: /var/log/filebeat/filebeat
+        register: stat_result
