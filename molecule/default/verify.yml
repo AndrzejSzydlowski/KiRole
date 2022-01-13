@@ -5,6 +5,12 @@
   hosts: all
   gather_facts: false
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+  - name: Check if kibana is accessible
+    wait_for: host=localhost port=9200 timeout=3
+    register: host_accessible
+    failed_when: False
+  - name: Check that the kibana.log exists
+    stat:
+      path: /var/logs/kibana.log
+    register: stat_result
+    failed_when: False
