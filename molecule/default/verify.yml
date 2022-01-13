@@ -6,11 +6,13 @@
   gather_facts: false
   tasks:
   - name: Check if kibana is accessible
-    wait_for: host=localhost port=9200 timeout=3
-    register: host_accessible
-    failed_when: False
+    assert:
+      that:
+        wait_for: host=localhost port=5601 timeout=3
+        register: host_accessible
   - name: Check that the kibana.log exists
-    stat:
-      path: /var/logs/kibana.log
-    register: stat_result
-    failed_when: False
+    assert:
+      that:    
+        stat:
+          path: /var/logs/kibana.log
+        register: stat_result
