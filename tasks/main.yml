@@ -11,6 +11,11 @@
       yum:
         name: "/tmp/kibana-{{ elk_stack_version }}-x86_64.rpm"
         state: present
+    - name: Install Initscripts
+      become: true
+      yum:
+        name: initscripts
+        state: present
     - name: Configure Kibana
       become: true
       template:

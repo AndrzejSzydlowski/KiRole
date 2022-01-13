@@ -1,4 +1,5 @@
 ---
 # handlers file for kibana-role
   - name: restart Kibana
-    shell: "sh /etc/init.d/kibana restart"
+    become: true
+    command: /etc/init.d/kibana restart
